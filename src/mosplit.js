@@ -3,7 +3,7 @@ import PouchDB from 'pouchdb'
 import {validate, decorate} from './validation'
 import * as views from './views'
 
-export class Mosplit {
+export default class Mosplit {
     constructor({
         tripsDB   = PouchDB('Mosplit.trips'),
         entriesDB = PouchDB('Mosplit.entries')

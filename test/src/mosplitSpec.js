@@ -1,4 +1,4 @@
-import {Mosplit} from '../../lib/mosplit'
+import Mosplit from '../../lib/mosplit'
 import PouchDB from 'pouchdb'
 import mocha from 'mocha'
 import should from 'should'
