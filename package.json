@@ -1,6 +1,6 @@
 {
     "name": "mosplit",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "description": "",
     "main": "lib/mosplit.js",
     "directories": {
@@ -18,7 +18,7 @@
         "presets":["es2015"]
     },
     "author": "Carlo Colombo",
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
         "babel": "^6.1.18",
         "babel-cli": "^6.2.0",
