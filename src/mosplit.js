@@ -59,8 +59,8 @@ export default class Mosplit {
             group_level: 2,
             startkey: [trip_id],
             endkey: [trip_id, {}]
-        }).then(function(data) {
-            return _.zipObject(_.map(data.rows, function splitterAndValue(row) {
+        }).then(data => {
+            return _.zipObject(_.map(data.rows, row => {
                 return [
                     row.key[1],
                     row.value
