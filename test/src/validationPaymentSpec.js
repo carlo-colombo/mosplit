@@ -1,4 +1,4 @@
-import validate from '../lib/validation'
+import validate from '../../lib/validation'
 import should from 'should'
 import _ from 'lodash'
 import mocha from 'mocha'

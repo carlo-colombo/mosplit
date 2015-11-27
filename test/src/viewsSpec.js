@@ -1,4 +1,4 @@
-import * as views from '../lib/views'
+import * as views from '../../lib/views'
 import _ from 'lodash'
 import should from 'should'
 import mocha from 'mocha'

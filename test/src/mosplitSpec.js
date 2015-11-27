@@ -1,8 +1,8 @@
-import {Mosplit} from '../lib/mosplit'
+import {Mosplit} from '../../lib/mosplit'
 import PouchDB from 'pouchdb'
 import mocha from 'mocha'
 import should from 'should'
-import validateFun from '../lib/validation'
+import validateFun from '../../lib/validation'
 
 let  ms, entriesDB, tripsDB, dboptions;
 
