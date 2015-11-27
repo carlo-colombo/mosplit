@@ -60,12 +60,10 @@ export default class Mosplit {
             startkey: [trip_id],
             endkey: [trip_id, {}]
         }).then(data => {
-            return _.zipObject(_.map(data.rows, row => {
-                return [
-                    row.key[1],
-                    row.value
-                ]
-            }))
+            return _(data.rows)
+                .map(row => [row.key[1], row.value])
+                .zipObject()
+                .value()
         })
     }
 
