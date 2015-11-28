@@ -2,13 +2,12 @@
     "name": "mosplit",
     "version": "0.1.4",
     "description": "",
-    "main": "lib/mosplit.js",
     "directories": {
         "test": "test"
     },
     "scripts": {
         "build": "babel src --out-dir lib",
-        "prepublish": "npm test && npm run build",
+        "__prepublish": "npm test && npm run build",
         "prebuild-test": "npm run build",
         "build-test": "babel test/src --out-dir test/lib",
         "pretest": "npm run build-test",
