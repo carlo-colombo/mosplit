@@ -15,10 +15,6 @@ if((typeof window != 'undefined' && window.document)){
 }
 
 describe('Mosplit', ()=>{
-    it('should instantiate without any parameter', ()=>{
-        new Mosplit().should.be.ok
-    })
-
     beforeEach((done)=>{
         var dbSuffix = PouchDB.utils.uuid()
 
