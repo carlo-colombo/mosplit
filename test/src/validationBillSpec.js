@@ -3,6 +3,8 @@ import should from 'should'
 import _ from 'lodash'
 import mocha from 'mocha'
 
+import {bill, payment} from '../../lib/schema'
+
 describe('validation', ()=>{
     describe('bill', function() {
         it('should accept a valid bill', function() {
@@ -11,13 +13,13 @@ describe('validation', ()=>{
                 amount: 10.4,
                 payer: 'a',
                 trip: 'tripname'
-            }, 'bill')
+            }, bill)
 
             res.valid.should.be.ok
         })
 
         it('should validate bill', function() {
-            var res = validate({}, 'bill')
+            var res = validate({}, bill)
             res.valid.should.be.false
             _.each(['trip', 'splitters', 'payer', 'amount'], function(prop) {
                 should.exist(_.findWhere(res.errors, {
@@ -33,7 +35,7 @@ describe('validation', ()=>{
                 splitters: ['b'],
                 amount: 'asd',
                 trip: 'tripname'
-            }, 'bill')
+            }, bill)
 
             res.valid.should.be.false
             res.errors.should.have.a.lengthOf(1)
@@ -50,7 +52,7 @@ describe('validation', ()=>{
                 splitters: [],
                 amount: 10.5,
                 trip: 'tripname'
-            }, 'bill')
+            }, bill)
             res.valid.should.be.false
             res.errors.should.have.a.lengthOf(1)
             should.exist(_.findWhere(res.errors,{

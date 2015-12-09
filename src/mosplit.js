@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import PouchDB from 'pouchdb'
-import {validate, decorate} from './validation'
+import {validate} from './validation'
 import * as views from './views'
+import {trip, payment, bill} from './schema'
 
 export default class Mosplit {
     constructor({
@@ -28,9 +29,7 @@ export default class Mosplit {
             }))
     }
 
-
-
-    // @validate('trip')
+    @validate(trip)
     create({name, splitters}){
         return this.tripsDB.put({
             _id: name,
@@ -43,12 +42,12 @@ export default class Mosplit {
         }).then(_.property('id'))
     }
 
-    // @validate('bill')
+    @validate(bill)
     addBill(bill){
         return addEntry('bill').call(this, bill)
     }
 
-    // @validate('payment')
+    @validate(payment)
     addPayment(payment){
         return addEntry('payment').call(this, payment)
     }
@@ -79,10 +78,6 @@ export default class Mosplit {
 
     }
 }
-
-decorate(Mosplit.prototype, 'create', validate('trip'))
-decorate(Mosplit.prototype, 'addBill', validate('bill'))
-decorate(Mosplit.prototype, 'addPayment', validate('payment'))
 
 function addEntry(type){
     return function(entry){

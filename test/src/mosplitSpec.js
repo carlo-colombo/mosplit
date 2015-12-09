@@ -4,6 +4,8 @@ import mocha from 'mocha'
 import should from 'should'
 import validateFun from '../../lib/validation'
 
+import {trip} from '../../lib/schema'
+
 let  ms, entriesDB, tripsDB, dboptions;
 
 if((typeof window != 'undefined' && window.document)){
@@ -305,7 +307,7 @@ describe('Mosplit', ()=>{
                 .then(trips => {
                     trips.should.be.instanceOf.Array
                     trips.should.be.lengthOf(1)
-                    validateFun(trips[0],'trip').valid.should.be.ok
+                    validateFun(trips[0], trip).valid.should.be.ok
                 })
         })
 

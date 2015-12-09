@@ -4,7 +4,7 @@ import schemas from './schema'
 export default function validateFun(object, schema){
     var validator = new ZSchema()
 
-    var valid = validator.validate(object, schemas[schema])
+    var valid = validator.validate(object, schema)
 
     return {
         valid: valid,
@@ -26,13 +26,4 @@ export function validate(validator){
 
         return descriptor
     }
-}
-
-
-export function decorate(proto, method, decorator){
-    let gopd = Object.getOwnPropertyDescriptor
-    let dp   = Object.defineProperty
-    let temp = decorator(proto,method, gopd(proto,method))
-
-    dp(proto, method, temp)
 }

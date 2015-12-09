@@ -3,6 +3,8 @@ import should from 'should'
 import _ from 'lodash'
 import mocha from 'mocha'
 
+import {payment} from '../../lib/schema'
+
 describe('validation', function() {
     describe('payment', function() {
         it('should accept valid payment', function() {
@@ -11,14 +13,15 @@ describe('validation', function() {
                 target: 'b',
                 amount: 10,
                 trip: 'tripName'
-            }, 'payment')
+            }, payment)
 
             res.valid.should.be.ok
         })
 
         it('should validate payment', function() {
-            var res = validate({}, 'payment')
-            var err = res.errors
+            let res = validate({}, payment)
+            let err = res.errors
+
             res.valid.should.be.false
             _.each(['trip', 'source', 'target', 'amount'], function(prop) {
                 should.exist(_.findWhere(err, {
@@ -29,16 +32,18 @@ describe('validation', function() {
         })
 
         it('should reject non numeric amount', function() {
-            var res = validate({
+            let res = validate({
                 source: 'a',
                 target: 'b',
                 amount: 'asd',
                 trip: 'tripname'
-            }, 'payment')
+            }, payment),
+                err = res.errors
 
             res.valid.should.be.false
-            var err = res.errors
+
             err.should.have.a.lengthOf(1)
+
             should.exist(_.findWhere(err, {
                 code: 'INVALID_TYPE',
                 path: '#/amount'
