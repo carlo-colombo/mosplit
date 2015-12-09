@@ -1,6 +1,6 @@
 {
   "name": "mosplit",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "directories": {
     "test": "test"
@@ -18,8 +18,8 @@
       "es2015"
     ],
     "plugins": [
-        "transform-decorators-legacy",
-        "syntax-decorators"
+      "transform-decorators-legacy",
+      "syntax-decorators"
     ]
   },
   "author": "Carlo Colombo",
