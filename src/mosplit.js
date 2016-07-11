@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import {property, filter, uniq, map, extend, fromPairs} from 'lodash'
 import PouchDB from 'pouchdb'
 import {validate} from './validation'
 import * as views from './views'
@@ -16,7 +16,7 @@ export default class Mosplit {
     initialize(){
         return this.entriesDB
             .get('_design/entries')
-            .then(_.property('_rev'), () => null)
+            .then(property('_rev'), () => null)
             .then(rev => this.entriesDB.put({
                 _id:'_design/entries',
                 _rev: rev,
@@ -31,15 +31,12 @@ export default class Mosplit {
 
     @validate(trip)
     create({name, splitters}){
+        const splittersList = uniq(filter(map(splitters, s => s.trim())))
         return this.tripsDB.put({
             _id: name,
             name,
-            splitters: _(splitters)
-                .map(s => s.trim())
-                .filter()
-                .unique()
-                .value()
-        }).then(_.property('id'))
+            splitters: splittersList
+        }).then(property('id'))
     }
 
     @validate(bill)
@@ -59,10 +56,8 @@ export default class Mosplit {
             startkey: [trip_id],
             endkey: [trip_id, {}]
         }).then(data => {
-            return _(data.rows)
-                .map(row => [row.key[1], row.value])
-                .zipObject()
-                .value()
+            console.log(data)
+            return fromPairs(map(data.rows, row => [row.key[1], row.value]))
         })
     }
 
@@ -73,8 +68,8 @@ export default class Mosplit {
     get trips(){
         return this.tripsDB
             .allDocs({include_docs:true})
-            .then(_.property('rows'))
-            .then( ret => ret.map(_.property('doc')))
+            .then(property('rows'))
+            .then( ret => ret.map(property('doc')))
 
     }
 }
@@ -82,9 +77,10 @@ export default class Mosplit {
 function addEntry(type){
     return function(entry){
         return this.entriesDB
-            .post(_.extend({}, entry, {
+            .post({
+                ...entry,
                 type
-            }))
-            .then(_.property('id'))
+            })
+            .then(property('id'))
     }
 }

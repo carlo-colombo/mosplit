@@ -16,7 +16,7 @@ if((typeof window != 'undefined' && window.document)){
 
 describe('Mosplit', ()=>{
     beforeEach((done)=>{
-        var dbSuffix = PouchDB.utils.uuid()
+        var dbSuffix = new Date().getTime()
 
         Promise.all([
             new PouchDB('CashSplitter.trips'   + dbSuffix, dboptions),
@@ -184,22 +184,20 @@ describe('Mosplit', ()=>{
     })
 
     describe('#totals', function() {
-        it('should split a single entry equally between 2 splitters', function(done) {
-            ms.addBill({
+        it('should split a single entry equally between 2 splitters', ()=>{
+            return ms.addBill({
                 trip: 'trip',
                 amount: 10,
                 splitters: ['a', 'b'],
                 payer: 'a'
-            }).then(function() {
+            }).then(() => {
                 return ms
                     .totals('trip')
                     .then(function(data) {
                         should.exist(data)
                         data.b.should.be.eql(5)
                         data.a.should.be.eql(-5)
-                        done()
                     })
-                    .catch(done)
             })
         })
 

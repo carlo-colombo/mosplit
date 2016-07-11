@@ -1,6 +1,6 @@
 import validate from '../../lib/validation'
 import should from 'should'
-import _ from 'lodash'
+import {find} from 'lodash'
 import mocha from 'mocha'
 
 import {payment} from '../../lib/schema'
@@ -22,9 +22,10 @@ describe('validation', function() {
             let res = validate({}, payment)
             let err = res.errors
 
-            res.valid.should.be.false
-            _.each(['trip', 'source', 'target', 'amount'], function(prop) {
-                should.exist(_.findWhere(err, {
+            res.valid.should.be.false;
+
+            ['trip', 'source', 'target', 'amount'].forEach(prop => {
+                should.exist(find(err, {
                     params: [prop],
                     code: 'OBJECT_MISSING_REQUIRED_PROPERTY'
                 }))
@@ -44,7 +45,7 @@ describe('validation', function() {
 
             err.should.have.a.lengthOf(1)
 
-            should.exist(_.findWhere(err, {
+            should.exist(find(err, {
                 code: 'INVALID_TYPE',
                 path: '#/amount'
             }))

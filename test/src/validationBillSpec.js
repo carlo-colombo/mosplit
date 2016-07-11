@@ -1,6 +1,6 @@
 import validate from '../../lib/validation'
 import should from 'should'
-import _ from 'lodash'
+import {find} from 'lodash'
 import mocha from 'mocha'
 
 import {bill, payment} from '../../lib/schema'
@@ -20,9 +20,9 @@ describe('validation', ()=>{
 
         it('should validate bill', function() {
             var res = validate({}, bill)
-            res.valid.should.be.false
-            _.each(['trip', 'splitters', 'payer', 'amount'], function(prop) {
-                should.exist(_.findWhere(res.errors, {
+            res.valid.should.be.false;
+            ['trip', 'splitters', 'payer', 'amount'].forEach(prop => {
+                should.exist(find(res.errors, {
                     params: [prop],
                     code: 'OBJECT_MISSING_REQUIRED_PROPERTY'
                 }))
@@ -40,7 +40,7 @@ describe('validation', ()=>{
             res.valid.should.be.false
             res.errors.should.have.a.lengthOf(1)
 
-            should.exist(_.findWhere(res.errors, {
+            should.exist(find(res.errors, {
                 code: 'INVALID_TYPE',
                 path: '#/amount'
             }))
@@ -55,7 +55,7 @@ describe('validation', ()=>{
             }, bill)
             res.valid.should.be.false
             res.errors.should.have.a.lengthOf(1)
-            should.exist(_.findWhere(res.errors,{
+            should.exist(find(res.errors,{
                 code:'ARRAY_LENGTH_SHORT',
                 path:'#/splitters'
             }))
